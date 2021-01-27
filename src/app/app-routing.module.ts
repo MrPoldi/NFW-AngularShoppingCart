@@ -5,6 +5,11 @@ import { StoreComponent } from './store/store.component';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/store',
+    pathMatch: 'full'
+  },
+  {
     path: 'store',
     component: StoreComponent
   },
@@ -12,12 +17,7 @@ const routes: Routes = [
     path: 'cart',
     loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule),
     component: ShoppingCartComponent
-  },
-  {
-    path: '**',
-    redirectTo: '/store',
-    pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({
