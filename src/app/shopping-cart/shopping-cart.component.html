@@ -1,2 +1,7 @@
 <p>shopping-cart works! {{varTest}}</p>
+<ul *ngIf="selectedDishes">
+    <li *ngFor="let dish of selectedDishes">
+        <span>{{dish.name}}</span>
+    </li>
+</ul>
 <a [routerLink]="'/store'">Store</a>

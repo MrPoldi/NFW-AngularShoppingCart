@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Dish } from '../models/dish.model';
+import { ShoppingCartService } from '../services/shopping-cart.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -9,9 +11,16 @@ export class ShoppingCartComponent implements OnInit {
 
   varTest = 'zxcvbnm';
 
-  constructor() { }
+  selectedDishes: Array<Dish>;
+
+  constructor(private cartService: ShoppingCartService) { }
 
   ngOnInit(): void {
+    this.getSelectedDishes();
+  }
+
+  getSelectedDishes(): void{
+    this.selectedDishes = this.cartService.getSelectedDishes();
   }
 
 }
