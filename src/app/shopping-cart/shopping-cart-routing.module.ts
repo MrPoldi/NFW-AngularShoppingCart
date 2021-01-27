@@ -5,16 +5,19 @@ import { ShoppingCartComponent } from './shopping-cart.component';
 
 const routes: Routes = [
   {
-    path: '', component: ShoppingCartComponent
+    path: '',
+    component: ShoppingCartComponent
   }
 ];
-
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
+  ],
+  exports: [
+    RouterModule
   ]
 })
 export class ShoppingCartRoutingModule { }

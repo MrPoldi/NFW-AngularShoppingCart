@@ -10,7 +10,6 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
   declarations: [
     AppComponent,
     StoreComponent,
-    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
