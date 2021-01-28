@@ -1,7 +1,8 @@
 <p>shopping-cart works! {{varTest}}</p>
-<ul *ngIf="selectedDishes">
+<ul *ngIf="cart.items.length !== 0 else empty">
     <li *ngFor="let item of cart.items">
         <span>{{item.dish.name}} x{{item.amount}}|| <button (click)="onClick(item.dish)">Usuń z koszyka</button></span>
     </li>
 </ul>
+<ng-template #empty><h2>There's nothing in your cart :(</h2></ng-template>
 <a [routerLink]="'/store'">Store</a>
