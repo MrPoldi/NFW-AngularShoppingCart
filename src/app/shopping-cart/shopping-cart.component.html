@@ -1,7 +1,7 @@
 <p>shopping-cart works! {{varTest}}</p>
 <ul *ngIf="selectedDishes">
-    <li *ngFor="let dish of selectedDishes">
-        <span>{{dish.name}}</span>
+    <li *ngFor="let item of cart.items">
+        <span>{{item.dish.name}} x{{item.amount}}|| <button (click)="onClick(item.dish)">Usuń z koszyka</button></span>
     </li>
 </ul>
 <a [routerLink]="'/store'">Store</a>

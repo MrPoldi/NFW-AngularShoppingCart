@@ -1,9 +1,12 @@
 <p>store works!</p>
-<ul>
-    <li *ngFor="let dish of dishes" (click)="onClick(dish)">
-        <span>Id: {{dish.id}} || Text: {{dish.name}} || Price: {{dish.price}}</span>
-    </li>
-</ul>
+<!-- <ul> -->
+<div *ngFor="let dish of dishes">
+    <!-- <span>Id: {{dish.id}} || Text: {{dish.name}} || Price: {{dish.price}}</span> -->
+    <h2>{{dish.id}}. {{dish.name}}</h2>
+    <div>Price: {{dish.price}}</div>
+    <button  (click)="onClick(dish)">Dodaj do koszyka</button>
+</div>
+<!-- </ul> -->
 
 <h2>Selected dish: <span *ngIf="selectedDish">{{selectedDish.name}}</span></h2>
 <a [routerLink]="'/cart'">Cart</a>
