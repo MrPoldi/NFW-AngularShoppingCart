@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Dish } from '../models/dish.model';
+import { ShoppingCart } from '../models/ShoppingCart.model';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 
 @Component({
@@ -7,30 +9,39 @@ import { ShoppingCartService } from '../services/shopping-cart.service';
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss']
 })
-export class StoreComponent implements OnInit {
+export class StoreComponent implements OnInit, OnDestroy {
 
   dishes: Array<Dish>;
   selectedDish: Dish;
 
+  cart: ShoppingCart;
+  dishSub: Subscription;
+
   constructor(private cartService: ShoppingCartService) { }
+
   getDishes(): void{
     this.cartService.getDishes().subscribe((data: any) => {
-      // console.log(data);
       this.dishes = data;
+    });
+  }
+
+  getChosenDish(): void{
+    this.dishSub = this.cartService.getDish().subscribe((data: Dish) => {
+      this.selectedDish = data;
     });
   }
 
   ngOnInit(): void {
     this.getDishes();
+    this.getChosenDish();
   }
 
-  onClick(dish): void {
-    this.cartService.selectDish(dish);
-    this.getSelectedDish();
+  ngOnDestroy(): void{
+    this.dishSub.unsubscribe();
   }
 
-  getSelectedDish(): void{
-    this.selectedDish =  this.cartService.selectedDish;
+  onAddToCart(dish): void {
+    this.cartService.setDish(dish);
   }
 
 }

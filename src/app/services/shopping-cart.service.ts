@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {DISHES} from '../mock-dishes';
 import { Dish } from '../models/dish.model';
 import {HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Observer } from 'rxjs';
 import { ShoppingCart } from '../models/ShoppingCart.model';
 import { CartItem } from '../models/cart-item.model';
 
@@ -11,36 +10,35 @@ import { CartItem } from '../models/cart-item.model';
 })
 export class ShoppingCartService {
 
-  constructor(private http: HttpClient) { }
+  cartObservable: Observable<ShoppingCart> = new Observable<ShoppingCart>();
+  dishSubject: Subject<Dish> = new Subject<Dish>();
 
-  selectedDish: Dish;
-  selectedDishes: Array<Dish> = new Array<Dish>();
   cart: ShoppingCart = new ShoppingCart();
+
+  constructor(private http: HttpClient) {
+    this.cartObservable = new Observable<ShoppingCart>((observer: Observer<ShoppingCart>) => {
+      observer.next(this.cart);
+    });
+  }
+
+  setDish(dish: Dish): void{
+    this.dishSubject.next(dish);
+    this.cart.addItem(new CartItem(dish));
+  }
+
+  getDish(): Observable<Dish>{
+    return this.dishSubject;
+  }
 
   getDishes(): Observable<Array<Dish>>{
     return this.http.get<Array<Dish>>('https://patient-grass-7793.getsandbox.com:443/dishes');
   }
 
-  selectDish(dish: Dish): void{
-    this.selectedDish = dish;
-    this.selectedDishes.push(dish);
-    // const cartItem = new CartItem(dish);
-    this.cart.addItem(new CartItem(dish));
+  getCart(): Observable<ShoppingCart> {
+    return this.cartObservable;
   }
 
   removeDish(dish: Dish): void{
     this.cart.removeItem(new CartItem(dish));
-  }
-
-  getSelectedDish(): Dish{
-    return this.selectedDish;
-  }
-
-  getShoppingCart(): ShoppingCart{
-    return this.cart;
-  }
-
-  getSelectedDishes(): Array<Dish>{
-    return this.selectedDishes;
   }
 }

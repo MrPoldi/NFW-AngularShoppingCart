@@ -21,7 +21,6 @@ export class ShoppingCart {
         const item = this.items.find((i) => i.dish.id === oldItem.dish.id);
         if (item.amount === 1){
             this.items = this.items.filter(i => i !== item);
-            console.log(this.items);
         }
         else{
             item.amount--;
