@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { Dish } from '../models/dish.model';
 import { ShoppingCart } from '../models/ShoppingCart.model';
@@ -17,7 +18,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   cart: ShoppingCart;
   dishSub: Subscription;
 
-  constructor(private cartService: ShoppingCartService) { }
+  constructor(private cartService: ShoppingCartService, private toast: NbToastrService) { }
 
   getDishes(): void{
     this.cartService.getDishes().subscribe((data: any) => {
@@ -40,8 +41,11 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.dishSub.unsubscribe();
   }
 
-  onAddToCart(dish): void {
+  onAddToCart(dish: Dish): void {
     this.cartService.setDish(dish);
+    this.toast.show(
+      '',
+      `Added to cart: ${dish.name}`);
   }
 
 }

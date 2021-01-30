@@ -1,13 +1,18 @@
-<p>store works!</p>
+
 <div *ngIf = "dishes else loading">
     <div *ngFor="let dish of dishes">
-        <!-- <span>Id: {{dish.id}} || Text: {{dish.name}} || Price: {{dish.price}}</span> -->
-        <h2>{{dish.id}}. {{dish.name}}</h2>
-        <div>Price: {{dish.price}}</div>
-        <button  (click)="onAddToCart(dish)">Dodaj do koszyka</button>
+        <nb-card>
+            <nb-card-header>{{dish.id}}. {{dish.name}}</nb-card-header>
+            <nb-card-body>                
+                <span>Price: {{dish.price}}</span>                
+            </nb-card-body>
+            <nb-card-footer><button (click)="onAddToCart(dish)" nbButton status="primary">Add to cart</button></nb-card-footer>
+        </nb-card>        
     </div>
 </div>
 <ng-template #loading><h2>Loading...</h2></ng-template>
 
-<h2 *ngIf="selectedDish">Selected dish: <span >{{selectedDish.name}}</span></h2>
-<a [routerLink]="'/cart'">Cart</a>
+<!-- <h2 *ngIf="selectedDish">Selected dish: <span >{{selectedDish.name}}</span></h2> -->
+<a [routerLink]="'/cart'" nbButton>Cart</a>
+
+

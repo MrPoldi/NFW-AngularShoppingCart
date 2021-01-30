@@ -25,6 +25,8 @@ export class ShoppingCart {
         else{
             item.amount--;
         }
+        this.priceTotal -= oldItem.dish.price;
+        this.itemsTotal--;
     }
 
 }

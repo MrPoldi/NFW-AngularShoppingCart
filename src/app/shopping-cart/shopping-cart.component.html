@@ -1,8 +1,17 @@
-<p>shopping-cart works!</p>
-<ul *ngIf="cart.items.length !== 0 else empty">
-    <li *ngFor="let item of cart.items">
-        <span>{{item.dish.name}} x{{item.amount}}|| <button (click)="onClick(item.dish)">Usuń z koszyka</button></span>
-    </li>
-</ul>
+<div *ngIf="cart.items.length !== 0 else empty">   
+    <nb-card *ngFor="let item of cart.items" style="padding: 5px;">
+        <nb-card-heder>
+            {{item.dish.name}} x{{item.amount}} <button style="margin-left: 10px;" (click)="onClick(item.dish)" nbButton status="danger">Remove</button>
+        </nb-card-heder>
+    </nb-card>
+</div>
 <ng-template #empty><h2>There's nothing in your cart :(</h2></ng-template>
-<a [routerLink]="'/store'">Store</a>
+<nb-card>
+    <nb-card-header>
+        Total items: {{cart.itemsTotal}}
+    </nb-card-header>
+    <nb-card-body>
+        Total price: {{cart.priceTotal}}
+    </nb-card-body>
+</nb-card>
+<a [routerLink]="'/store'" nbButton>Store</a>
